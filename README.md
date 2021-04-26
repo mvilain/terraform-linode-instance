@@ -19,7 +19,7 @@ Include this repository as a module in your existing Terraform code:
 
 ```hcl
 module "lin_instance" {
-  source      = "github.com/JamesWoolfenden/terraform-linode-instance"
+  source      = "github.com/mvilain/terraform-linode-instance"
   version.    = "0.0.1"
 }
 ```
