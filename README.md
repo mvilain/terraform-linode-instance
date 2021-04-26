@@ -46,8 +46,8 @@ module "lin_instance" {
 |  Name  |          Description                  |   Type   |         Default        | Required |
 |--------|---------------------------------------|----------|------------------------|:--------:|
 | image  | Linode Image type to use              | `string` | `"linode/ubuntu18.04"` |    no    |
-| region | The Linode region to use              | `string` | `"eu-west"`            |    no    |
-| type   | The image size type to use            | `string` | `"g6-standard-1"`      |    no    |
+| region | The Linode region to use              | `string` | `"us-west"`            |    no    |
+| type   | The image size type to use            | `string` | `"g6-nanode-1"`        |    no    |
 | label  | The label used to define the instance | `string` | `"example"`            |    no    |
 
 ## Outputs
@@ -86,5 +86,3 @@ This module is to serve as sample data for Checkov SAST rules.
 [jameswoolfenden_homepage]: https://github.com/jameswoolfenden
 [jameswoolfenden_avatar]: https://github.com/jameswoolfenden.png?size=150
 [github]: https://github.com/jameswoolfenden
-[linkedin]: https://www.linkedin.com/in/jameswoolfenden/
-[twitter]: https://twitter.com/JimWoolfenden
