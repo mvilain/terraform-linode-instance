@@ -24,6 +24,7 @@ module "lin_instance" {
 
 |  Name  | Version|
 |--------|--------|
+| linode | 1.16.0 |
 | local  | 2.0.0  |
 | random | 3.0.0  |
 | tls    | 3.0.0  |
@@ -32,6 +33,7 @@ module "lin_instance" {
 
 |  Name  | Version|
 |--------|--------|
+| linode | 1.16.0 |
 | local  | 2.0.0  |
 | random | 3.0.0  |
 | tls    | 3.0.0  |
@@ -45,29 +47,41 @@ module "lin_instance" {
 | type   | The image size type to use            | `string` | `"g6-nanode-1"`        |    no    |
 | label  | The label used to define the instance | `string` | `"example"`            |    no    |
 
+The Linode list is available from 
+
+    curl -s https://api.linode.com/v4/images | jq ".data[]|.id" | sed -e 's/"//g'
+
+The full list of regions is available from
+
+    curl -s https://api.linode.com/v4/regions |jq ".data[]|.id" | sed -e 's/"//g'
+
+The full list of types is available from
+
+    curl -s https://api.linode.com/v4/linode/types | jq ".data[] | .id" | sed -e 's/"//g'
+
 ## Outputs
 
-|    Name    | Description               |
-|------------|---------------------------|
-| id         | new Linode id             |
-| password   | generated root password   |
-| ssh        | generated ssh private key |
-| ip_address | assigned public IP addres |
+|    Name    | Description                |
+|------------|----------------------------|
+| id         | new Linode id              |
+| password   | generated root password    |
+| ssh        | generated ssh private key  |
+| ip_address | assigned public IP address |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Example Code
 
+
 ```
 resource "linode_instance" "example" {
-  label           = local.instance_label
-  image           = var.image
-  region          = var.region
-  type            = var.type
-  authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
-  root_pass       = random_password.password.result
-  tags            = [ var.label ]
+  image           = "linode/centos8"
+  region          = "us-east"
+  type            = "g6.standard-1"
+  label           = "foobar"
 }
+
+will create a standard linode 
 ```
 
 ## Tests
