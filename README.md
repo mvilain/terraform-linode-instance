@@ -76,4 +76,4 @@ This module is to serve as sample data for Checkov SAST rules
 
 ### Contributors
 
-[jameswoolfenden]: https://github.com/jameswoolfenden
+https://github.com/jameswoolfenden
