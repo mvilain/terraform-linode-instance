@@ -1,5 +1,7 @@
 output "ssh" {
-  value = tls_private_key.ssh
+  value     = tls_private_key.ssh
+  sensitive = true
+
 }
 
 output "password" {
@@ -7,6 +9,11 @@ output "password" {
   sensitive = true
 }
 
-output "instance" {
-  value = linode_instance.example
+output "id" {
+  value     = linode_instance.my_linode_instance.id
+#  sensitive = true
+}
+
+output "ip_address" {
+  value     = linode_instance.my_linode_instance.ip_address
 }

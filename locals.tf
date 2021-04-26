@@ -1,4 +1,4 @@
 
 locals {
-  instance_label = "example_instance_${random_string.rando.result}"
+  instance_label = "${var.label}_instance_${random_string.rando.result}"
 }

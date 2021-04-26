@@ -7,12 +7,17 @@ variable "image" {
 variable "region" {
   type        = string
   description = "The Linode region to use"
-  default     = "eu-west"
+  default     = "us-west"
 }
-
 
 variable "type" {
   type        = string
   description = "The image size type to use"
-  default     = "g6-standard-1"
+  default     = "g6-nanode-1"
+}
+
+variable "label" {
+  type        = string
+  description = "The label used to create the instance"
+  default     = "example"
 }

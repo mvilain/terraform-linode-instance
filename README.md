@@ -18,7 +18,7 @@ export LINODE_TOKEN="xxxxx"
 Include this repository as a module in your existing Terraform code:
 
 ```hcl
-module "instance" {
+module "lin_instance" {
   source      = "github.com/JamesWoolfenden/terraform-linode-instance"
   version.    = "0.0.1"
 }
@@ -27,39 +27,53 @@ module "instance" {
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| linode | 1.13.4 |
-| local | 2.0.0 |
-| random | 3.0.0 |
-| tls | 3.0.0 |
+|  Name  | Version|
+|--------|--------|
+| local  | 2.0.0  |
+| random | 3.0.0  |
+| tls    | 3.0.0  |
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| linode | 1.13.4 |
-| local | 2.0.0 |
-| random | 3.0.0 |
-| tls | 3.0.0 |
+|  Name  | Version|
+|--------|--------|
+| local  | 2.0.0  |
+| random | 3.0.0  |
+| tls    | 3.0.0  |
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| image | Linode Image type to use | `string` | `"linode/ubuntu18.04"` | no |
-| region | The Linode region to use | `string` | `"eu-west"` | no |
-| type | The image size type to use | `string` | `"g6-standard-1"` | no |
+|  Name  |          Description                  |   Type   |         Default        | Required |
+|--------|---------------------------------------|----------|------------------------|:--------:|
+| image  | Linode Image type to use              | `string` | `"linode/ubuntu18.04"` |    no    |
+| region | The Linode region to use              | `string` | `"eu-west"`            |    no    |
+| type   | The image size type to use            | `string` | `"g6-standard-1"`      |    no    |
+| label  | The label used to define the instance | `string` | `"example"`            |    no    |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| instance | n/a |
-| password | n/a |
-| ssh | n/a |
+|    Name    | Description |
+|------------|-------------|
+| id         |      n/a    |
+| password   |      n/a    |
+| ssh        |      n/a    |
+| ip_address |      n/a    |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## Example Code
+
+```
+resource "linode_instance" "example" {
+  label           = local.instance_label
+  image           = var.image
+  region          = var.region
+  type            = var.type
+  authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
+  root_pass       = random_password.password.result
+  tags            = [ var.label ]
+}
+```
 
 ## Tests
 
