@@ -1,10 +1,5 @@
 # terraform-linode-instance
 
-[![Build Status](https://github.com/JamesWoolfenden/terraform-linode-instance/workflows/Verify%20and%20Bump/badge.svg?branch=master)](https://github.com/JamesWoolfenden/terraform-linode-instance)
-[![Latest Release](https://img.shields.io/github/release/JamesWoolfenden/terraform-linode-instance.svg)](https://github.com/JamesWoolfenden/terraform-linode-instance/releases/latest)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
-[![checkov](https://img.shields.io/badge/checkov-verified-brightgreen)](https://www.checkov.io/)
-
 ## Usage
 
 Requires your Personal Access Token as an Environmental Variable.
@@ -52,12 +47,12 @@ module "lin_instance" {
 
 ## Outputs
 
-|    Name    | Description |
-|------------|-------------|
-| id         |      n/a    |
-| password   |      n/a    |
-| ssh        |      n/a    |
-| ip_address |      n/a    |
+|    Name    | Description               |
+|------------|---------------------------|
+| id         | new Linode id             |
+| password   | generated root password   |
+| ssh        | generated ssh private key |
+| ip_address | assigned public IP addres |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
@@ -77,12 +72,8 @@ resource "linode_instance" "example" {
 
 ## Tests
 
-This module is to serve as sample data for Checkov SAST rules.
+This module is to serve as sample data for Checkov SAST rules
 
 ### Contributors
 
-[![James Woolfenden][jameswoolfenden_avatar]][jameswoolfenden_homepage]<br/>[James Woolfenden][jameswoolfenden_homepage]
-
-[jameswoolfenden_homepage]: https://github.com/jameswoolfenden
-[jameswoolfenden_avatar]: https://github.com/jameswoolfenden.png?size=150
-[github]: https://github.com/jameswoolfenden
+[jameswoolfenden]: https://github.com/jameswoolfenden
