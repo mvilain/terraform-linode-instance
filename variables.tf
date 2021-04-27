@@ -1,3 +1,13 @@
+variable "password" {
+  type        = string
+  description = "The root password used to create the instance"
+}
+
+variable "ssh_key" {
+  type        = string
+  description = "The ssh public key used in instance's authorized_hosts'"
+}
+
 variable "image" {
   type        = string
   description = "Linode Image type to use"

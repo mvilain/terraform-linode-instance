@@ -1,5 +1,6 @@
 output "ssh" {
-  value = module.instance.ssh
+  value     = module.instance.ssh
+  sensitive = true
 }
 
 output "password" {
@@ -8,5 +9,5 @@ output "password" {
 }
 
 output "instance" {
-  value = module.instance.instance
+  value      = module.instance.instance
 }

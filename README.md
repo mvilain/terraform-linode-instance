@@ -2,9 +2,12 @@
 
 ## Usage
 
-Requires your Personal Access Token as an Environmental Variable.
+The original module automatically generated your instance root password and SSH key,
+but that made it generate different ones over multiple calls.  This version takes
+the root password and SSH keys as arguments so that the module can be used to generate
+different instances.
 
-Module automatically generate your instance root password amd SSH key.
+Requires your Personal Access Token as an Environmental Variable.
 
 ```bash
 export LINODE_TOKEN="xxxxx"
@@ -15,7 +18,7 @@ Include this repository as a module in your existing Terraform code:
 ```hcl
 module "lin_instance" {
   source      = "github.com/mvilain/terraform-linode-instance"
-  version.    = "0.0.1"
+  version.    = "0.0.2"
 }
 ```
 
@@ -40,12 +43,14 @@ module "lin_instance" {
 
 ## Inputs
 
-|  Name  |          Description                  |   Type   |         Default        | Required |
-|--------|---------------------------------------|----------|------------------------|:--------:|
-| image  | Linode Image type to use              | `string` | `"linode/ubuntu18.04"` |    no    |
-| region | The Linode region to use              | `string` | `"us-west"`            |    no    |
-| type   | The image size type to use            | `string` | `"g6-nanode-1"`        |    no    |
-| label  | The label used to define the instance | `string` | `"example"`            |    no    |
+|   Name   |           Description                  |   Type   |         Default        | Required |
+|----------|----------------------------------------|----------|------------------------|:--------:|
+| password | Linode root password                   | `string` | none                   |   YES    |
+| ssh_key  | Linode ssh_key used to create instance | `string` | none                   |   YES    |
+| image    | Linode Image type to use               | `string` | `"linode/ubuntu18.04"` |    no    |
+| region   | The Linode region to use               | `string` | `"us-west"`            |    no    |
+| type     | The image size type to use             | `string` | `"g6-nanode-1"`        |    no    |
+| label    | The label used to define the instance  | `string` | `"example"`            |    no    |
 
 The Linode list is available from 
 
@@ -61,17 +66,22 @@ The full list of types is available from
 
 ## Outputs
 
-|    Name    | Description                |
-|------------|----------------------------|
-| id         | new Linode id              |
-| password   | generated root password    |
-| ssh        | generated ssh private key  |
-| ip_address | assigned public IP address |
+| Name                 | Description                                            |
+|----------------------|--------------------------------------------------------|
+| id                   | new Linode id                                          |
+| `ip_address`         | assigned public IP address                             |
+| `private_ip_address` | private IP address, if enabled                         |
+| ipv6                 | Linode's IPv6 SLAAC addresses                          |
+| ipv4                 | Linode's IPv4 Addresses (need ticket for multiple IPs) |
+| backups.enabled      | Linode's backups are enabled                           |
+| backups.schedule     | schedule when backups are run                          |
+| backups.day          | date of week when backups are taken                    |
+| backups.window       | UTC window when backups are taken                      |
+
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Example Code
-
 
 ```
 resource "linode_instance" "example" {

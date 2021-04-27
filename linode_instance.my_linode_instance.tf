@@ -3,16 +3,31 @@ resource "linode_instance" "my_linode_instance" {
   image            = var.image
   region           = var.region
   type             = var.type
-  authorized_keys  = [ chomp(tls_private_key.ssh.public_key_openssh) ]
-  root_pass        = random_password.password.result
+  authorized_keys  = [ chomp(var.ssh_key) ]
+  root_pass        = var.password
+#  authorized_keys  = [ chomp(tls_private_key.ssh.public_key_openssh) ]
+#  root_pass        = random_password.password.result
   tags             = [ var.label ]
   watchdog_enabled = true
-#  alerts.0.cpu     = 0
-#    io             = 0
-#    network_in     = 0
-#    network_out    = 0
-#    transfer_quota = 0
-#  }
+
+  provisioner "local-exec" {
+    command = "echo ${var.label} ansible_host=${self.ip_address} >> inventory"
+  }
+
+  # update the sshd file
+  provisioner "remote-exec" {
+    inline = [
+#      "apt-get update",
+#      "apt-get install python3 -y",
+      "echo ${var.label} running..."
+      ]
+    connection {
+      host        = self.ip_address
+      type        = "ssh"
+      user        = "root"
+      password    = var.password
+    }
+  }
 }
 # outputs:
 #  id
