@@ -43,14 +43,15 @@ module "lin_instance" {
 
 ## Inputs
 
-|   Name   |           Description                  |   Type   |         Default        | Required |
-|----------|----------------------------------------|----------|------------------------|:--------:|
-| password | Linode root password                   | `string` | none                   |   YES    |
-| ssh_key  | Linode ssh_key used to create instance | `string` | none                   |   YES    |
-| image    | Linode Image type to use               | `string` | `"linode/ubuntu18.04"` |    no    |
-| region   | The Linode region to use               | `string` | `"us-west"`            |    no    |
-| type     | The image size type to use             | `string` | `"g6-nanode-1"`        |    no    |
-| label    | The label used to define the instance  | `string` | `"example"`            |    no    |
+| Name      | Description                                  |   Type   |         Default        | Required |
+|-----------|----------------------------------------------|----------|------------------------|:--------:|
+| password  | Linode root password                         | `string` | none                   |   YES    |
+| `ssh_key` | Linode `ssh_key` used to create instance     | `string` | none                   |   YES    |
+| image     | Linode Image type to use                     | `string` | `"linode/ubuntu18.04"` |    no    |
+| region    | The Linode region to use                     | `string` | `"us-west"`            |    no    |
+| type      | The image size type to use                   | `string` | `"g6-nanode-1"`        |    no    |
+| label     | label used to define instance and hostname   | `string` | `"example"`            |    no    |
+| domain    | Linode DNS domain used to define instance IP | `string` | `"example.com"`        |    no    |
 
 The Linode list is available from 
 
@@ -66,17 +67,16 @@ The full list of types is available from
 
 ## Outputs
 
-| Name                 | Description                                            |
-|----------------------|--------------------------------------------------------|
-| id                   | new Linode id                                          |
-| `ip_address`         | assigned public IP address                             |
-| `private_ip_address` | private IP address, if enabled                         |
-| ipv6                 | Linode's IPv6 SLAAC addresses                          |
-| ipv4                 | Linode's IPv4 Addresses (need ticket for multiple IPs) |
-| backups.enabled      | Linode's backups are enabled                           |
-| backups.schedule     | schedule when backups are run                          |
-| backups.day          | date of week when backups are taken                    |
-| backups.window       | UTC window when backups are taken                      |
+| Name                    | Description                                            |
+|-------------------------|--------------------------------------------------------|
+| id                      | new Linode id                                          |
+| `ip_address`            | assigned public IP address                             |
+| `private_ip_address`    | private IP address, if enabled                         |
+| ipv6                    | Linode's IPv6 SLAAC addresses                          |
+| ipv4                    | Linode's IPv4 Addresses (need ticket for multiple IPs) |
+| backups.enabled         | Linode's backups are enabled                           |
+| backups.schedule.day    | schedule day of week when backups are run              |
+| backups.schedule.window | UTC window when backups are taken                      |
 
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -89,9 +89,10 @@ resource "linode_instance" "example" {
   region          = "us-east"
   type            = "g6.standard-1"
   label           = "foobar"
+  domain          = "mydomain.com"
 }
 
-will create a standard linode 
+will create a standard linode with DNS entry foobar.mydomain.com
 ```
 
 ## Tests

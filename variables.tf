@@ -28,6 +28,12 @@ variable "type" {
 
 variable "label" {
   type        = string
-  description = "The label used to create the instance"
+  description = "The label used to create the instance and hostname"
   default     = "example"
+}
+
+variable "domain" {
+  type        = string
+  description = "pre-existing Linode-managed DNS domain to assign public IP of created instance"
+  default     = "example.com"
 }
