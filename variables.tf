@@ -14,6 +14,12 @@ variable "image" {
   default     = "linode/ubuntu18.04"
 }
 
+variable "script" {
+  type        = string
+  description = "script to execute after Linode is running"
+  default     = "config/all.sh"
+}
+
 variable "region" {
   type        = string
   description = "The Linode region to use"

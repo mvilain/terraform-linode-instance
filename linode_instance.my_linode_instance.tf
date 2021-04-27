@@ -14,12 +14,32 @@ resource "linode_instance" "my_linode_instance" {
     command = "echo ${var.label} ansible_host=${self.ip_address} >> inventory"
   }
 
-  # update the sshd file
+  provisioner "file" {
+    source      = "${local.config_dir}/${var.script}"
+    destination = "/tmp/${var.script}"
+    connection {
+      host        = self.ip_address
+      type        = "ssh"
+      user        = "root"
+      password    = var.password
+    }
+  }
+  provisioner "file" {
+    source      = "${local.config_dir}/all.sh"
+    destination = "/tmp/all.sh"
+    connection {
+      host        = self.ip_address
+      type        = "ssh"
+      user        = "root"
+      password    = var.password
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
-#      "apt-get update",
-#      "apt-get install python3 -y",
-      "echo ${var.label} running..."
+      "chmod 755 /tmp/all.sh /tmp/${var.script}",
+      "/tmp/all.sh",
+      "/tmp/${var.script}"
       ]
     connection {
       host        = self.ip_address

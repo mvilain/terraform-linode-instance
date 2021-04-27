@@ -48,6 +48,7 @@ module "lin_instance" {
 | password  | Linode root password                         | `string` | none                   |   YES    |
 | `ssh_key` | Linode `ssh_key` used to create instance     | `string` | none                   |   YES    |
 | image     | Linode Image type to use                     | `string` | `"linode/ubuntu18.04"` |    no    |
+| script    | script to execute after Linode is running    | `string` | config/all.sh          |    no    |
 | region    | The Linode region to use                     | `string` | `"us-west"`            |    no    |
 | type      | The image size type to use                   | `string` | `"g6-nanode-1"`        |    no    |
 | label     | label used to define instance and hostname   | `string` | `"example"`            |    no    |
