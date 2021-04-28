@@ -43,3 +43,9 @@ variable "domain" {
   description = "pre-existing Linode-managed DNS domain to assign public IP of created instance"
   default     = "example.com"
 }
+
+variable "inventory" {
+  type        = string
+  description = "pre-existing inventory file used for ansible to append instance info into"
+  default     = "inventory"
+}

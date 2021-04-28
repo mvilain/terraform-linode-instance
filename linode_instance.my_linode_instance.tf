@@ -11,7 +11,7 @@ resource "linode_instance" "my_linode_instance" {
   watchdog_enabled = true
 
   provisioner "local-exec" {
-    command = "echo ${var.label} ansible_host=${self.ip_address} >> inventory"
+    command = "echo ${var.label} ansible_host=${self.ip_address} >> ${var.inventory}"
   }
 
   provisioner "file" {

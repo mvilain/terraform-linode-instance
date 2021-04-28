@@ -43,16 +43,17 @@ module "lin_instance" {
 
 ## Inputs
 
-| Name      | Description                                  |   Type   |         Default        | Required |
-|-----------|----------------------------------------------|----------|------------------------|:--------:|
-| password  | Linode root password                         | `string` | none                   |   YES    |
-| `ssh_key` | Linode `ssh_key` used to create instance     | `string` | none                   |   YES    |
-| image     | Linode Image type to use                     | `string` | `"linode/ubuntu18.04"` |    no    |
-| script    | script to execute after Linode is running    | `string` | config/all.sh          |    no    |
-| region    | The Linode region to use                     | `string` | `"us-west"`            |    no    |
-| type      | The image size type to use                   | `string` | `"g6-nanode-1"`        |    no    |
-| label     | label used to define instance and hostname   | `string` | `"example"`            |    no    |
-| domain    | Linode DNS domain used to define instance IP | `string` | `"example.com"`        |    no    |
+| Name      | Description                                          |   Type   |         Default        | Required |
+|-----------|------------------------------------------------------|----------|------------------------|:--------:|
+| password  | Linode root password                                 | `string` | none                   |   YES    |
+| `ssh_key` | Linode `ssh_key` used to create instance             | `string` | none                   |   YES    |
+| image     | Linode Image type to use                             | `string` | `"linode/ubuntu18.04"` |    no    |
+| script    | script to execute after Linode is running            | `string` | config/all.sh          |    no    |
+| region    | The Linode region to use                             | `string` | `"us-west"`            |    no    |
+| type      | The image size type to use                           | `string` | `"g6-nanode-1"`        |    no    |
+| label     | label used to define instance and hostname           | `string` | `"example"`            |    no    |
+| domain    | Linode DNS domain used to define instance IP         | `string` | `"example.com"`        |    no    |
+| inventory | pre-existing ansible inventory file for inserting IP | `string` | `"inventory"`          |    no    |
 
 The Linode list is available from 
 
@@ -91,6 +92,7 @@ resource "linode_instance" "example" {
   type            = "g6.standard-1"
   label           = "foobar"
   domain          = "mydomain.com"
+  inventory       = "inventory_py3"
 }
 
 will create a standard linode with DNS entry foobar.mydomain.com
