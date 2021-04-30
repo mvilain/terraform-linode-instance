@@ -47,7 +47,7 @@ resource "linode_instance" "my_linode_instance" {
   provisioner "remote-exec" {
     inline = [
       "chmod 755 /tmp/all.sh /tmp/${var.script}",
-      "/tmp/all.sh",
+      "/tmp/all.sh ${var.label}",
       "/tmp/${var.script}"
       ]
     connection {
