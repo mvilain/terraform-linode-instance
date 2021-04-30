@@ -1,3 +1,12 @@
+# The Linode list is available from 
+#     curl -s https://api.linode.com/v4/images | jq ".data[]|.id" | sed -e 's/"//g'
+# 
+# The full list of regions is available from
+#     curl -s https://api.linode.com/v4/regions |jq ".data[]|.id" | sed -e 's/"//g'
+# 
+# The full list of types is available from
+#     curl -s https://api.linode.com/v4/linode/types | jq ".data[] | .id" | sed -e 's/"//g'
+# 
 resource "linode_instance" "my_linode_instance" {
   label            = local.instance_label
   image            = var.image
