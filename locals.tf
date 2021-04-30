@@ -1,5 +1,5 @@
 
 locals {
   instance_label = "${var.label}_instance_${random_string.rando.result}"
-  config_dir     = "terraform_config/"
+  config_dir     = "terraform-config/"
 }
