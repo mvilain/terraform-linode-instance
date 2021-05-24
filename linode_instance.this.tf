@@ -7,7 +7,7 @@
 # The full list of types is available from
 #     curl -s https://api.linode.com/v4/linode/types | jq ".data[] | .id" | sed -e 's/"//g'
 # 
-resource "linode_instance" "my_linode_instance" {
+resource "linode_instance" "this" {
   label            = local.instance_label
   image            = var.image
   region           = var.region
@@ -95,5 +95,5 @@ resource "linode_domain_record" "my_dns_entry" {
   domain_id   = data.linode_domain.my_domain.id
   name        = var.label
   record_type = "A"
-  target      = linode_instance.my_linode_instance.ip_address
+  target      = linode_instance.this.ip_address
 }
