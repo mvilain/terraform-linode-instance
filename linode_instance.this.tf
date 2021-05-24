@@ -1,4 +1,4 @@
-# The Linode list is available from 
+# The full list of Linode images is available from 
 #     curl -s https://api.linode.com/v4/images | jq ".data[]|.id" | sed -e 's/"//g'
 # 
 # The full list of regions is available from
@@ -7,6 +7,27 @@
 # The full list of types is available from
 #     curl -s https://api.linode.com/v4/linode/types | jq ".data[] | .id" | sed -e 's/"//g'
 # 
+# Inputs:
+# 
+#   - password - string - root password used to create the instance
+#   - ssh\_key - string - description = "The ssh public key used in instance's authorized_hosts
+#   - image - string - Linode Image type to use
+#   - script - string - script to execute after Linode is running
+#   - region - string - The Linode region to use
+#   - type - string - The image size type to use
+#   - label - string - The label used to create the instance and hostname
+#   - domain - string - pre-existing Linode-managed DNS domain to assign public IP of created instance
+#   - inventory - string - pre-existing inventory file used for ansible to append instance info into
+# 
+#  Outputs:
+# 
+#   - id - string - linode\_instance.this.id
+#   - ip\_address - string - linode\_instance.this.ip\_address
+#   - private\_ip\_address - string - linode\_instance.this.private\_ip\_address`
+#   - ipv6 - string - linode\_instance.this.ipv6
+#   - ipv4 - string - linode\_instance.this.ipv4
+#   - backups - string - linode\_instance.this.backups
+#
 resource "linode_instance" "this" {
   label            = local.instance_label
   image            = var.image
@@ -14,8 +35,6 @@ resource "linode_instance" "this" {
   type             = var.type
   authorized_keys  = [ chomp(var.ssh_key) ]
   root_pass        = var.password
-#  authorized_keys  = [ chomp(tls_private_key.ssh.public_key_openssh) ]
-#  root_pass        = random_password.password.result
   tags             = [ var.label ]
   watchdog_enabled = true
 
