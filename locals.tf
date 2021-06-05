@@ -1,5 +1,7 @@
 
 locals {
   instance_label = "${var.label}_instance_${random_string.rando.result}"
-  config_dir     = "terraform-config/"
+  tmp            = trimprefix("${var.image}", "linode/")
+  tmp2           = trimsuffix("${local.tmp}", "lts")
+  os_tag         = trimsuffix("${local.tmp2}", ".04")
 }
