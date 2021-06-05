@@ -53,7 +53,6 @@ module "lin_instance" {
 | type      | The image size type to use                           | `string` | `"g6-nanode-1"`        |    no    |
 | label     | label used to define instance and hostname           | `string` | `"example"`            |    no    |
 | domain    | Linode DNS domain used to define instance IP         | `string` | `"example.com"`        |    no    |
-| inventory | pre-existing ansible inventory file for inserting IP | `string` | `"inventory"`          |    no    |
 
 The Linode list is available from 
 
