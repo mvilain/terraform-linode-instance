@@ -16,8 +16,7 @@ variable "image" {
 
 variable "script" {
   type        = string
-  description = "script to execute after Linode is running"
-  default     = "config/all.sh"
+  description = "linode stackscript id to execute after Linode is running"
 }
 
 variable "region" {
@@ -42,10 +41,4 @@ variable "domain" {
   type        = string
   description = "pre-existing Linode-managed DNS domain to assign public IP of created instance"
   default     = "example.com"
-}
-
-variable "inventory" {
-  type        = string
-  description = "pre-existing inventory file used for ansible to append instance info into"
-  default     = "inventory"
 }
