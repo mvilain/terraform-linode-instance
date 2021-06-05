@@ -12,12 +12,11 @@
 #   - password - string - root password used to create the instance
 #   - ssh\_key - string - description = "The ssh public key used in instance's authorized_hosts
 #   - image - string - Linode Image type to use
-#   - script - string - script to execute after Linode is running
+#   - script - string - Linode stackscript.id to execute after Linode is running
 #   - region - string - The Linode region to use
 #   - type - string - The image size type to use
 #   - label - string - The label used to create the instance and hostname
 #   - domain - string - pre-existing Linode-managed DNS domain to assign public IP of created instance
-#   - inventory - string - pre-existing inventory file used for ansible to append instance info into
 # 
 #  Outputs:
 # 
@@ -35,46 +34,16 @@ resource "linode_instance" "this" {
   type             = var.type
   authorized_keys  = [ chomp(var.ssh_key) ]
   root_pass        = var.password
-  tags             = [ var.label ]
+  tags             = [
+    var.label,
+    local.os_tag,
+    "Terraform"
+  ]
   watchdog_enabled = true
-
-  provisioner "local-exec" {
-    command = "echo ${var.label} ansible_host=${self.ip_address} >> ${var.inventory}"
-  }
-
-  provisioner "file" {
-    source      = "${local.config_dir}/${var.script}"
-    destination = "/tmp/${var.script}"
-    connection {
-      host        = self.ip_address
-      type        = "ssh"
-      user        = "root"
-      password    = var.password
-    }
-  }
-  provisioner "file" {
-    source      = "${local.config_dir}/all.sh"
-    destination = "/tmp/all.sh"
-    connection {
-      host        = self.ip_address
-      type        = "ssh"
-      user        = "root"
-      password    = var.password
-    }
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "chmod 755 /tmp/all.sh /tmp/${var.script}",
-      "/tmp/all.sh ${var.label}",
-      "/tmp/${var.script}"
-      ]
-    connection {
-      host        = self.ip_address
-      type        = "ssh"
-      user        = "root"
-      password    = var.password
-    }
+  stackscript_id   = var.script
+  stackscript_data = {
+    "HOSTNAME"  = var.label
+    "DOMAIN"    = var.domain
   }
 }
 # outputs:
